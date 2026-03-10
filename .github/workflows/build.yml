@@ -1,0 +1,40 @@
+name: Java Build Sample
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Compile Java
+        run: |
+          javac src/Main.java
+
+      - name: Create jar
+        run: |
+          jar cfe hello.jar Main -C src Main.class
+
+      - name: Run jar
+        run: |
+          java -jar hello.jar
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-jar
+          path: hello.jar
