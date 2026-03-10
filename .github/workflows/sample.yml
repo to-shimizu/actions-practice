@@ -3,9 +3,17 @@ name: sample-actions
 on:
   workflow_dispatch:
 
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: print message
-        run: echo "Hello GitHub Actions"
+        run: echo "Push or PR detected"
